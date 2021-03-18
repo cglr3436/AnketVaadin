@@ -19,6 +19,7 @@ public class Secenek extends BaseEntity{
     private String tipi;
 
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID_SORU", foreignKey = @ForeignKey(name = "FK_SECENEK_SORU"))
     private Soru Soru;
@@ -59,6 +60,11 @@ public class Secenek extends BaseEntity{
 
     public void setAdi(String adi) {
         this.adi = adi;
+    }
+
+    @Override
+    public String toString() {
+        return adi ;
     }
 }
 

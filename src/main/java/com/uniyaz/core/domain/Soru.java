@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "SORU")
-public class Soru extends BaseEntity{
+public class Soru extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
@@ -24,7 +24,7 @@ public class Soru extends BaseEntity{
     private Panel panel;
 
     public Soru(Panel panel) {
-        this.panel=panel;
+        this.panel = panel;
     }
 
     public Soru() {
@@ -37,6 +37,7 @@ public class Soru extends BaseEntity{
     public void setPanel(Panel panel) {
         this.panel = panel;
     }
+
     public String getSecenek_tipi() {
         return secenek_tipi;
     }
