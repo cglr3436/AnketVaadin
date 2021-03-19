@@ -23,5 +23,6 @@
         <mapping class="com.uniyaz.core.domain.Panel"></mapping>
         <mapping class="com.uniyaz.core.domain.Soru"></mapping>
         <mapping class="com.uniyaz.core.domain.Secenek"></mapping>
+        <mapping class="com.uniyaz.core.domain.AnketCevap"></mapping>
     </session-factory>
 </hibernate-configuration>

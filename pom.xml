@@ -3,10 +3,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.uniyaz</groupId>
-	<artifactId>siparis-yonetim</artifactId>
+	<artifactId>AnketVaadin</artifactId>
 	<packaging>war</packaging>
 	<version>0.1</version>
-	<name>siparis-yonetim</name>
+	<name>AnketVaadin</name>
 
 	<properties>
 		<vaadin.version>7.6.5</vaadin.version>

@@ -63,6 +63,11 @@ public class Soru extends BaseEntity {
         this.adi = adi;
     }
 
+    @Override
+    public String toString() {
+        return adi ;
+    }
+
     public void setSoru(Soru soru) {
     }
 }

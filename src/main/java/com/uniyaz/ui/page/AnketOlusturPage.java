@@ -1,14 +1,9 @@
 package com.uniyaz.ui.page;
 
-import com.uniyaz.core.domain.Anket;
-import com.uniyaz.core.domain.Panel;
+import com.uniyaz.core.domain.*;
 
-import com.uniyaz.core.domain.Secenek;
-import com.uniyaz.core.domain.Soru;
-import com.uniyaz.core.service.AnketService;
-import com.uniyaz.core.service.PanelService;
-import com.uniyaz.core.service.SecenekService;
-import com.uniyaz.core.service.SoruService;
+import com.uniyaz.core.domain.Panel;
+import com.uniyaz.core.service.*;
 import com.uniyaz.ui.SyUI;
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
@@ -19,18 +14,17 @@ import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.window.WindowMode;
 import com.vaadin.ui.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class AnketOlusturPage extends VerticalLayout {
     private VerticalLayout mainLayout;
-    private Table table;
-    private Container container;
 
+List<AnketCevap> hepsi;
     public AnketOlusturPage() {
-
+        hepsi=new ArrayList<AnketCevap>();
         setSizeFull();
-        buildMainLayout();
+        String kullanici_adi=" ";
+        buildMainLayout(kullanici_adi);
         addComponent( mainLayout );
 
         setComponentAlignment( mainLayout, Alignment.MIDDLE_CENTER );
@@ -41,7 +35,8 @@ public class AnketOlusturPage extends VerticalLayout {
         //addComponents(button);
     }
 
-    private void buildMainLayout() {
+    private void buildMainLayout(String kullanici_adi) {
+
 
         mainLayout = new VerticalLayout();
         mainLayout.setSizeUndefined();
@@ -73,25 +68,27 @@ public class AnketOlusturPage extends VerticalLayout {
                 SecenekService secenekService = new SecenekService();
                 List<Secenek> secenekList = secenekService.findAllbyAnketID( soru.getId() );
 
-                OptionGroup group = new OptionGroup( soru.getAdi().toString() );
-
                 // Label soruAdi=new Label("SORU:"+soru.getAdi().toString());
                 // soruici.addComponents(soruAdi);
                 if (soru.getSecenek_tipi().equals( "Tekli" )) {
-                    TextField SecenekAdi = new TextField( "SORU:" + soru.getAdi() );
-                    soruici.addComponents( SecenekAdi );
+                    TextField SoruveCevabi = new TextField( "SORU:" + soru.getAdi() );
+
+                    AnketCevap anketCevap= new AnketCevap(soru,SoruveCevabi,"T",kullanici_adi);
+                    hepsi.add(anketCevap);
+                    soruici.addComponents( SoruveCevabi );
                 }
 
                 if (soru.getSecenek_tipi().equals( "CoktanRadio" )) {
 
                     OptionGroup radios = new OptionGroup( "SORU:" + soru.getAdi(), secenekList );
                     radios.setImmediate( true );
+
                     radios.addValueChangeListener( (Property.ValueChangeEvent event) -> {
                         Secenek vitalStatus = (Secenek) event.getProperty().getValue();
                         System.out.println( "User selected a vital status name: " + vitalStatus.getTipi() + ", labeled: " + vitalStatus.toString() );
                     } );
-
-
+                    AnketCevap anketCevap= new AnketCevap(soru,radios,"R",kullanici_adi);
+                    hepsi.add(anketCevap);
                     soruici.addComponents( radios );
                 }
 
@@ -100,10 +97,9 @@ public class AnketOlusturPage extends VerticalLayout {
                         CheckBox checkBox = new CheckBox( secenek.getAdi() );
                         checkBox.setImmediate( true );
                         checkBox.setData( secenek );
-                        checkBox.addValueChangeListener( (Property.ValueChangeEvent event) -> {
-                            // String vitalStatus = (String) event.getProperty().getValue();
-                            // System.out.println( "cHECKBOX: " + vitalStatus+ ", labeled: " + vitalStatus.toString() );
-                        } );
+                        secenek.setSoru( soru );
+                        AnketCevap anketCevap= new AnketCevap(secenek,checkBox,"C",kullanici_adi);
+                        hepsi.add(anketCevap);
                         soruici.addComponents( checkBox );
                     }
                 }
@@ -120,25 +116,8 @@ public class AnketOlusturPage extends VerticalLayout {
 
     }
 
-    private void fillTable() {
-        container.removeAllItems();
-        AnketService anketService = new AnketService();
-        List<Anket> anketList = anketService.findAllHql();
-        for (Anket anket : anketList) {
-            Item item = container.addItem( anket );
-            item.getItemProperty( "id" ).setValue( anket.getId() );
-            item.getItemProperty( "adi" ).setValue( anket.getAdi() );
-
-            //  Button guncelle = buildGuncelleButton(anket);
-            // item.getItemProperty("guncelle").setValue(guncelle);
-
-
-        }
-
-    }
-
     private Button buildEkleButton(Anket anket) {
-        Button ekleButton = new Button();
+        Button ekleButton = new Button("ANKET KAYDET");
         ekleButton.setIcon( FontAwesome.PLUS );
         ekleButton.addClickListener( new Button.ClickListener() {
             @Override
@@ -146,43 +125,55 @@ public class AnketOlusturPage extends VerticalLayout {
 
                 //  SyUI syUI = (SyUI) SyUI.getCurrent();
                 //  ContentComponent contentComponent = syUI.getContentComponent();
+                for (AnketCevap anketCevap:hepsi) {
+                    //anketCevap.getAnket();
+                    // anketCevap.getPanel();
+                    Soru soru = anketCevap.getSoru();
 
-                AnketPage anketPage = new AnketPage( anket );
 
-                Window window = new Window();
-                window.setCaption( "EKLE" );
-                window.setClosable( true );
-                window.setWindowMode( WindowMode.NORMAL );
-                window.setWidth( 30, Sizeable.Unit.PERCENTAGE );
-                window.setHeight( 30, Sizeable.Unit.PERCENTAGE );
-                window.setResizable( true );
-                window.center();
-                window.setContent( anketPage );
+                    if (soru.getSecenek_tipi().equals( "Tekli" )) {
+                        TextField textField = (TextField) anketCevap.getComponent();
+                        String cevap = textField.getValue();
+                        anketCevap.setAdi( anket.getAdi() );
+                        anketCevap.setTipi(soru.getSecenek_tipi());
+                        anketCevap.setCevap( cevap );
+                        AnketCevapService anketCevapService = new AnketCevapService();
+                        anketCevapService.saveAnketCevap( anketCevap );
+                    }
 
-                SyUI syUI = (SyUI) SyUI.getCurrent();
-                syUI.addWindow( window );
-            }
+                    if (soru.getSecenek_tipi().equals( "CoktanRadio" )) {
+                        //anketCevap.getSecenek();
+                        OptionGroup radios = (OptionGroup) anketCevap.getComponent();
+                        Secenek secenek = (Secenek) radios.getValue();
+
+                      //  Secenek vitalStatus = (Secenek) radios.getPropertyDataSource().getValue();
+                        anketCevap.setAdi( anket.getAdi() );
+                        anketCevap.setTipi(soru.getSecenek_tipi());
+                        anketCevap.setSecenek_id( secenek.getId() );
+                        anketCevap.setCevap( secenek.getAdi() );
+                        AnketCevapService anketCevapService = new AnketCevapService();
+                        anketCevapService.saveAnketCevap( anketCevap );
+
+                    }
+                    if (soru.getSecenek_tipi().equals( "CoktanCheckbox" )) {
+                        //anketCevap.getSecenek();
+                        CheckBox radios = (CheckBox) anketCevap.getComponent();
+                        Secenek secenek = (Secenek) radios.getData();
+                        if(radios.getValue()) {
+                            //  Secenek vitalStatus = (Secenek) radios.getPropertyDataSource().getValue();
+                        anketCevap.setAdi( anket.getAdi() );
+                        anketCevap.setTipi( secenek.getTipi() );
+                        anketCevap.setSecenek_id( secenek.getId() );
+                        anketCevap.setCevap( secenek.getAdi() );
+                        AnketCevapService anketCevapService = new AnketCevapService();
+                        anketCevapService.saveAnketCevap( anketCevap );
+                        }
+                    }
+                }}
+
         } );
         return ekleButton;
     }
 
-    private void buildTable() {
 
-        table = new Table();
-        table.setSelectable( true );
-        buildContainer();
-        table.setContainerDataSource( container );
-        table.setColumnHeaders( "ID", "ÜNVAN", "", "" );
-    }
-
-    private void buildContainer() {
-
-        container = new IndexedContainer();
-        container.addContainerProperty( "id", Long.class, null );
-        container.addContainerProperty( "adi", String.class, null );
-        container.addContainerProperty( "guncelle", Button.class, null );
-        //  container.addContainerProperty("secim", Button.class, null);
-        container.addContainerProperty( "panel", Button.class, null );
-
-    }
 }
