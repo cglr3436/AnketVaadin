@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * Created by AKARTAL on 12.3.2021.
+ *
  */
 public abstract class BaseEntity implements Serializable {
 

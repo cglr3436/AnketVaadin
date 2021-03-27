@@ -10,7 +10,7 @@ import java.awt.*;
 
 @Entity
 @Table(name = "ANKETCEVAP")
-public class AnketCevap extends BaseEntity{
+public class AnketCevap extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
@@ -56,36 +56,29 @@ public class AnketCevap extends BaseEntity{
     private String componet_tipi;
 
 
-
-    public AnketCevap(Secenek secenek , com.vaadin.ui.Component component, String componet_tipi,String kullanici_adi) {
-        this.secenek=secenek;
-        this.secenek_id=secenek.getId();
-        this.Soru=secenek.getSoru();
-        this.soru_id=secenek.getSoru().getId();
-        //this.panel=secenek.getSoru().getPanel();
-        //this.anket=secenek.getSoru().getPanel().getAnket();
-        this.component=component;
-        this.componet_tipi=componet_tipi;
-        this.kullanici_adi=kullanici_adi;
+    public AnketCevap(Secenek secenek, com.vaadin.ui.Component component, String componet_tipi, String kullanici_adi) {
+        this.secenek = secenek;
+        this.secenek_id = secenek.getId();
+        this.Soru = secenek.getSoru();
+        this.soru_id = secenek.getSoru().getId();
+        this.component = component;
+        this.componet_tipi = componet_tipi;
+        this.kullanici_adi = kullanici_adi;
     }
 
 
-    public AnketCevap(Soru soru,com.vaadin.ui.Component component,String componet_tipi,String kullanici_adi) {
+    public AnketCevap(Soru soru, com.vaadin.ui.Component component, String componet_tipi, String kullanici_adi) {
 
-        AnketCevapService anketCevapService=new AnketCevapService();
-
-        this.Soru=soru;
-        this.soru_id=soru.getId();
-        this.kullanici_adi=kullanici_adi;
-        //  this.panel=soru.getPanel();
-
-        //this.anket=soru.getPanel().getAnket();
-        this.component=component;
-        this.componet_tipi=componet_tipi;
+        this.Soru = soru;
+        this.soru_id = soru.getId();
+        this.kullanici_adi = kullanici_adi;
+        this.component = component;
+        this.componet_tipi = componet_tipi;
     }
 
     public AnketCevap() {
     }
+
     public Long getSecenek_id() {
         return secenek_id;
     }
@@ -149,6 +142,7 @@ public class AnketCevap extends BaseEntity{
     public void setComponet_tipi(String componet_tipi) {
         this.componet_tipi = componet_tipi;
     }
+
     public String getTipi() {
         return tipi;
     }
@@ -184,7 +178,7 @@ public class AnketCevap extends BaseEntity{
 
     @Override
     public String toString() {
-        return adi ;
+        return adi;
     }
 
     public String getKullanici_adi() {

@@ -1,12 +1,10 @@
 package com.uniyaz.ui.page;
 
-import com.uniyaz.core.domain.EnumCinsiyet;
+
 import com.uniyaz.core.domain.Anket;
 import com.uniyaz.core.domain.Panel;
 import com.uniyaz.core.service.AnketService;
 import com.uniyaz.ui.SyUI;
-import com.uniyaz.ui.component.ContentComponent;
-import com.uniyaz.ui.component.SyEditButton;
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
@@ -16,9 +14,6 @@ import com.vaadin.ui.*;
 
 import java.util.List;
 
-/**
- * Created by AKARTAL on 12.3.2021.
- */
 public class AnketListePage extends VerticalLayout {
 
     private VerticalLayout mainLayout;
@@ -35,8 +30,6 @@ public class AnketListePage extends VerticalLayout {
 
         fillTable();
 
-        //Button button=buildAnketButton();
-        //addComponents(button);
     }
 
     private void buildMainLayout() {
@@ -44,7 +37,7 @@ public class AnketListePage extends VerticalLayout {
         mainLayout = new VerticalLayout();
         mainLayout.setSizeUndefined();
 
-        Anket anket=new Anket();
+        Anket anket = new Anket();
         Button ekleButton = buildEkleButton(anket);
         mainLayout.addComponents(ekleButton);
 
@@ -64,7 +57,7 @@ public class AnketListePage extends VerticalLayout {
         table.setSelectable(true);
         buildContainer();
         table.setContainerDataSource(container);
-        table.setColumnHeaders("ID", "ÜNVAN", "",  "");
+        table.setColumnHeaders("ID", "ÜNVAN", "", "");
     }
 
     private void buildContainer() {
@@ -73,12 +66,11 @@ public class AnketListePage extends VerticalLayout {
         container.addContainerProperty("id", Long.class, null);
         container.addContainerProperty("adi", String.class, null);
         container.addContainerProperty("guncelle", Button.class, null);
-      //  container.addContainerProperty("secim", Button.class, null);
         container.addContainerProperty("panel", Button.class, null);
 
     }
 
-    private void fillTable() {
+    public void fillTable() {
         container.removeAllItems();
         AnketService anketService = new AnketService();
         List<Anket> anketList = anketService.findAllHql();
@@ -90,9 +82,6 @@ public class AnketListePage extends VerticalLayout {
             Button guncelle = buildGuncelleButton(anket);
             item.getItemProperty("guncelle").setValue(guncelle);
 
-        //    Button secim = buildSecimButton(anket);
-        //    item.getItemProperty("secim").setValue(secim);
-
             Button siparisButton = buildSiparisButton(anket);
             item.getItemProperty("panel").setValue(siparisButton);
 
@@ -100,38 +89,6 @@ public class AnketListePage extends VerticalLayout {
         }
 
     }
-
-        private Button buildAnketButton() {
-
-            Button secim = new Button();
-            secim.setIcon(FontAwesome.CHECK);
-            secim.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    SyUI syUI = (SyUI) SyUI.getCurrent();
-                    ContentComponent  contentComponent = syUI.getContentComponent();
-                    AnketPage anketPage = new AnketPage();
-                    contentComponent.addComponent(anketPage);
-
-                }
-            });
-            return secim;
-        }
-
-    private Button buildSecimButton(Anket anket) {
-
-        Button secim = new Button();
-        secim.setIcon(FontAwesome.CHECK);
-        secim.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                SyUI syUI = (SyUI) SyUI.getCurrent();
-                syUI.setAnket(anket);
-            }
-        });
-        return secim;
-    }
-
 
     private Button buildSiparisButton(Anket anket) {
         Button siparisButton = new Button();
@@ -141,9 +98,7 @@ public class AnketListePage extends VerticalLayout {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
 
-              //  SyUI syUI = (SyUI) SyUI.getCurrent();
-              //  ContentComponent contentComponent = syUI.getContentComponent();
-                Panel panel=new Panel(anket);
+                Panel panel = new Panel(anket);
                 PanelPage panelPage = new PanelPage(panel);
 
                 Window window = new Window();
@@ -151,9 +106,10 @@ public class AnketListePage extends VerticalLayout {
                 window.setClosable(true);
                 window.setWindowMode(WindowMode.NORMAL);
                 window.setWidth(30, Unit.PERCENTAGE);
-                window.setHeight(30, Unit.PERCENTAGE);
+                window.setHeight(50, Unit.PERCENTAGE);
                 window.setResizable(true);
                 window.center();
+
                 window.setContent(panelPage);
 
                 SyUI syUI = (SyUI) SyUI.getCurrent();
@@ -170,9 +126,6 @@ public class AnketListePage extends VerticalLayout {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
 
-                //  SyUI syUI = (SyUI) SyUI.getCurrent();
-                //  ContentComponent contentComponent = syUI.getContentComponent();
-
                 AnketPage anketPage = new AnketPage(anket);
 
                 Window window = new Window();
@@ -180,7 +133,7 @@ public class AnketListePage extends VerticalLayout {
                 window.setClosable(true);
                 window.setWindowMode(WindowMode.NORMAL);
                 window.setWidth(30, Unit.PERCENTAGE);
-                window.setHeight(30, Unit.PERCENTAGE);
+                window.setHeight(50, Unit.PERCENTAGE);
                 window.setResizable(true);
                 window.center();
                 window.setContent(anketPage);
@@ -200,9 +153,6 @@ public class AnketListePage extends VerticalLayout {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
 
-                //  SyUI syUI = (SyUI) SyUI.getCurrent();
-                //  ContentComponent contentComponent = syUI.getContentComponent();
-
                 AnketPage anketPage = new AnketPage(anket);
 
                 Window window = new Window();
@@ -210,13 +160,21 @@ public class AnketListePage extends VerticalLayout {
                 window.setClosable(true);
                 window.setWindowMode(WindowMode.NORMAL);
                 window.setWidth(30, Unit.PERCENTAGE);
-                window.setHeight(30, Unit.PERCENTAGE);
+                window.setHeight(50, Unit.PERCENTAGE);
                 window.setResizable(true);
                 window.center();
                 window.setContent(anketPage);
 
                 SyUI syUI = (SyUI) SyUI.getCurrent();
                 syUI.addWindow(window);
+                window.addCloseListener(new Window.CloseListener()
+                {
+                    @Override
+                    public void windowClose(Window.CloseEvent e)
+                    {
+                        fillTable();
+                    }
+                });
             }
         });
         return ekleButton;

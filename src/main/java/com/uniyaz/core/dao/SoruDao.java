@@ -14,7 +14,7 @@ import org.hibernate.transform.Transformers;
 import java.util.List;
 
 /**
- * Created by AKARTAL on 12.3.2021.
+ *
  */
 public class SoruDao {
 
@@ -72,8 +72,8 @@ public class SoruDao {
         try (Session session = sessionFactory.openSession()) {
             String hql =
                     "Select     soruAlias " +
-                            "From       Soru soruAlias "+
-                    "Where soruAlias.panel.id='" + id +"'" ;
+                            "From       Soru soruAlias " +
+                            "Where soruAlias.panel.id='" + id + "'";
             Query query = session.createQuery(hql);
 
             return query.list();
@@ -89,8 +89,8 @@ public class SoruDao {
         try (Session session = sessionFactory.openSession()) {
             String hql =
                     "Select     soruAlias " +
-                            "From       Soru soruAlias "+
-                            "Where soruAlias.id='" + id +"'" ;
+                            "From       Soru soruAlias " +
+                            "Where soruAlias.id='" + id + "'";
             Query query = session.createQuery(hql);
 
             return (Soru) query.list().get(0);
@@ -101,20 +101,7 @@ public class SoruDao {
         return null;
     }
 
-    public List<SoruDto> findAllHqlAliasToBean() {
-        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-        try (Session session = sessionFactory.openSession()) {
-            String hql =
-                    "Select     soruAlias.id, soruAlias.kodu " +
-                            "From       Soru soruAlias ";
-            Query query = session.createQuery(hql);
-            query.setResultTransformer(Transformers.aliasToBean(SoruDto.class));
-            return query.list();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 
 //    public List<SoruDtoNative> findAllNative() {
 //        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();

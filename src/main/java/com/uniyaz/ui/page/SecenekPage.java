@@ -14,7 +14,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.*;
 
 /**
- * Created by AKARTAL on 12.3.2021.
+ *
  */
 public class SecenekPage extends VerticalLayout {
 
@@ -27,7 +27,6 @@ public class SecenekPage extends VerticalLayout {
 
     @PropertyId("tipi")
     private String tipi;
-
 
 
     private FormLayout mainLayout;
@@ -43,8 +42,8 @@ public class SecenekPage extends VerticalLayout {
     }
 
     public SecenekPage(Secenek secenek) {
-        soru=secenek.getSoru();
-        tipi=secenek.getTipi();
+        soru = secenek.getSoru();
+        tipi = secenek.getTipi();
         setSizeFull();
         buildMainLayout();
         addComponent(mainLayout);
@@ -75,7 +74,7 @@ public class SecenekPage extends VerticalLayout {
             public void buttonClick(Button.ClickEvent clickEvent) {
                 try {
                     binder.commit();
-                   //  Anket anket= (Anket) soruBeanItem.getItemProperty("soru").getValue();
+                    //  Anket anket= (Anket) soruBeanItem.getItemProperty("soru").getValue();
                     Secenek secenek = secenekBeanItem.getBean();
                     SecenekService secenekService = new SecenekService();
                     secenekService.saveSecenek(secenek);

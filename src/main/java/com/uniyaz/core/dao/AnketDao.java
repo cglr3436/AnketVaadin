@@ -14,7 +14,7 @@ import org.hibernate.transform.Transformers;
 import java.util.List;
 
 /**
- * Created by AKARTAL on 12.3.2021.
+ *
  */
 public class AnketDao {
 
@@ -61,6 +61,20 @@ public class AnketDao {
                             "From       Anket anketAlias ";
             Query query = session.createQuery(hql);
             return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Anket findbyAdi(String adi) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            String hql =
+                    "Select     anketAlias " +
+                            "From       Anket anketAlias where anketAlias.adi='" + adi + "'";
+            Query query = session.createQuery(hql);
+            return (Anket) query.list().get(0);
         } catch (Exception e) {
             e.printStackTrace();
         }

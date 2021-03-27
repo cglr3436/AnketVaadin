@@ -13,7 +13,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.*;
 
 /**
- * Created by AKARTAL on 12.3.2021.
+ *
  */
 public class SoruPage extends VerticalLayout {
 
@@ -40,7 +40,7 @@ public class SoruPage extends VerticalLayout {
     }
 
     public SoruPage(Soru soru) {
-        panel=soru.getPanel();
+        panel = soru.getPanel();
         setSizeFull();
         buildMainLayout();
         addComponent(mainLayout);
@@ -79,7 +79,7 @@ public class SoruPage extends VerticalLayout {
             public void buttonClick(Button.ClickEvent clickEvent) {
                 try {
                     binder.commit();
-                   //  Anket anket= (Anket) soruBeanItem.getItemProperty("panel").getValue();
+                    //  Anket anket= (Anket) soruBeanItem.getItemProperty("panel").getValue();
                     Soru soru = soruBeanItem.getBean();
                     SoruService soruService = new SoruService();
                     soruService.saveSoru(soru);

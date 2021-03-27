@@ -14,7 +14,7 @@ import org.hibernate.transform.Transformers;
 import java.util.List;
 
 /**
- * Created by AKARTAL on 12.3.2021.
+ *
  */
 public class SecenekDao {
 
@@ -72,8 +72,8 @@ public class SecenekDao {
         try (Session session = sessionFactory.openSession()) {
             String hql =
                     "Select     secenekAlias " +
-                            "From       Secenek secenekAlias "+
-                    "Where secenekAlias.Soru.id='" + id +"'" ;
+                            "From       Secenek secenekAlias " +
+                            "Where secenekAlias.Soru.id='" + id + "'";
             Query query = session.createQuery(hql);
 
             return query.list();

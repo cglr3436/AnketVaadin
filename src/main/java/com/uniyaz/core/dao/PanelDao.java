@@ -14,7 +14,7 @@ import org.hibernate.transform.Transformers;
 import java.util.List;
 
 /**
- * Created by AKARTAL on 12.3.2021.
+ *
  */
 public class PanelDao {
 
@@ -72,8 +72,8 @@ public class PanelDao {
         try (Session session = sessionFactory.openSession()) {
             String hql =
                     "Select     panelAlias " +
-                            "From       Panel panelAlias "+
-                    "Where panelAlias.anket.id='" + id +"'" ;
+                            "From       Panel panelAlias " +
+                            "Where panelAlias.anket.id='" + id + "'";
             Query query = session.createQuery(hql);
 
             return query.list();

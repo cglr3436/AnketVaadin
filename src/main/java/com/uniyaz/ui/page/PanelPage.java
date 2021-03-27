@@ -11,7 +11,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.*;
 
 /**
- * Created by AKARTAL on 12.3.2021.
+ *
  */
 public class PanelPage extends VerticalLayout {
 
@@ -21,7 +21,7 @@ public class PanelPage extends VerticalLayout {
     @PropertyId("adi")
     private TextField adi;
 
-private Panel panel;
+    private Panel panel;
     private FormLayout mainLayout;
 
     private BeanItem<Panel> panelBeanItem;
@@ -35,7 +35,7 @@ private Panel panel;
     }
 
     public PanelPage(Panel panel) {
-        anket=panel.getAnket();
+        anket = panel.getAnket();
         setSizeFull();
         buildMainLayout();
         addComponent(mainLayout);
@@ -67,7 +67,7 @@ private Panel panel;
             public void buttonClick(Button.ClickEvent clickEvent) {
                 try {
                     binder.commit();
-                     Anket anket= (Anket) panelBeanItem.getItemProperty("anket").getValue();
+                    Anket anket = (Anket) panelBeanItem.getItemProperty("anket").getValue();
                     Panel panel = panelBeanItem.getBean();
                     PanelService panelService = new PanelService();
                     panelService.savePanel(panel);

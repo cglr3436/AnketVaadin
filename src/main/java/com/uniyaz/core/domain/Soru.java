@@ -65,7 +65,7 @@ public class Soru extends BaseEntity {
 
     @Override
     public String toString() {
-        return adi ;
+        return adi;
     }
 
     public void setSoru(Soru soru) {

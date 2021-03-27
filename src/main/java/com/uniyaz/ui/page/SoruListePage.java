@@ -5,7 +5,6 @@ import com.uniyaz.core.domain.Panel;
 import com.uniyaz.core.domain.Soru;
 import com.uniyaz.core.service.SoruService;
 import com.uniyaz.ui.SyUI;
-import com.uniyaz.ui.component.ContentComponent;
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
@@ -15,9 +14,6 @@ import com.vaadin.ui.*;
 
 import java.util.List;
 
-/**
- * Created by AKARTAL on 12.3.2021.
- */
 public class SoruListePage extends VerticalLayout {
 
     private VerticalLayout mainLayout;
@@ -25,14 +21,13 @@ public class SoruListePage extends VerticalLayout {
     private Container container;
     private Panel panel;
 
-    public SoruListePage(){
+    public SoruListePage() {
         this(new Panel());
     }
 
     public SoruListePage(Panel panel) {
         SyUI syUI = (SyUI) SyUI.getCurrent();
-        this.panel=syUI.getPanel();
-        //this.panel=panel;
+        this.panel = syUI.getPanel();
         setSizeFull();
         buildMainLayout();
         addComponent(mainLayout);
@@ -41,8 +36,6 @@ public class SoruListePage extends VerticalLayout {
 
         fillTable();
 
-        //Button button=buildSoruButton();
-        //addComponents(button);
     }
 
     private void buildMainLayout() {
@@ -50,7 +43,7 @@ public class SoruListePage extends VerticalLayout {
         mainLayout = new VerticalLayout();
         mainLayout.setSizeUndefined();
 
-        Soru soru=new Soru(panel);
+        Soru soru = new Soru(panel);
         Button ekleButton = buildEkleButton(soru);
         mainLayout.addComponents(ekleButton);
 
@@ -70,7 +63,7 @@ public class SoruListePage extends VerticalLayout {
         table.setSelectable(true);
         buildContainer();
         table.setContainerDataSource(container);
-        table.setColumnHeaders("ID", "ADI", "SECENEK_TIPI","", "");
+        table.setColumnHeaders("ID", "ADI", "SECENEK_TIPI", "", "");
     }
 
     private void buildContainer() {
@@ -80,16 +73,15 @@ public class SoruListePage extends VerticalLayout {
         container.addContainerProperty("adi", String.class, null);
         container.addContainerProperty("secenek_tipi", String.class, null);
         container.addContainerProperty("guncelle", Button.class, null);
-       // container.addContainerProperty("secim", Button.class, null);
         container.addContainerProperty("secenek", Button.class, null);
 
     }
 
-    private void fillTable() {
+    public void fillTable() {
 
         SoruService soruService = new SoruService();
         container.removeAllItems();
-        List<Soru> soruList = soruService.findAllbyAnketID(panel.getId());//soruService.findAllHql();
+        List<Soru> soruList = soruService.findAllbyAnketID(panel.getId());
         for (Soru soru : soruList) {
             Item item = container.addItem(soru);
             item.getItemProperty("id").setValue(soru.getId());
@@ -99,8 +91,6 @@ public class SoruListePage extends VerticalLayout {
             Button guncelle = buildGuncelleButton(soru);
             item.getItemProperty("guncelle").setValue(guncelle);
 
-           // Button secim = buildSecimButton(soru);
-         //   item.getItemProperty("secim").setValue(secim);
 
             Button siparisButton = buildSiparisButton(soru);
             item.getItemProperty("secenek").setValue(siparisButton);
@@ -110,38 +100,6 @@ public class SoruListePage extends VerticalLayout {
 
     }
 
-        private Button buildSoruButton() {
-
-            Button secim = new Button();
-            secim.setIcon(FontAwesome.CHECK);
-            secim.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    SyUI syUI = (SyUI) SyUI.getCurrent();
-                    ContentComponent  contentComponent = syUI.getContentComponent();
-                    SoruPage soruPage = new SoruPage();
-                    contentComponent.addComponent(soruPage);
-
-                }
-            });
-            return secim;
-        }
-
-    private Button buildSecimButton(Soru soru) {
-
-        Button secim = new Button();
-        secim.setIcon(FontAwesome.CHECK);
-        secim.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                SyUI syUI = (SyUI) SyUI.getCurrent();
-                syUI.setSoru(soru);
-            }
-        });
-        return secim;
-    }
-
-
     private Button buildSiparisButton(Soru soru) {
         Button siparisButton = new Button();
         siparisButton.setIcon(FontAwesome.PLUS);
@@ -150,11 +108,7 @@ public class SoruListePage extends VerticalLayout {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
 
-              //  SyUI syUI = (SyUI) SyUI.getCurrent();
-              //  ContentComponent contentComponent = syUI.getContentComponent();
-               // Soru soru=new Soru();
-               // soru.setSoru(soru);
-                Secenek secenek=new Secenek(soru);
+                Secenek secenek = new Secenek(soru);
                 SecenekPage secenekPage = new SecenekPage(secenek);
 
                 Window window = new Window();
@@ -162,7 +116,7 @@ public class SoruListePage extends VerticalLayout {
                 window.setClosable(true);
                 window.setWindowMode(WindowMode.NORMAL);
                 window.setWidth(30, Unit.PERCENTAGE);
-                window.setHeight(30, Unit.PERCENTAGE);
+                window.setHeight(50, Unit.PERCENTAGE);
                 window.setResizable(true);
                 window.center();
                 window.setContent(secenekPage);
@@ -181,9 +135,6 @@ public class SoruListePage extends VerticalLayout {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
 
-                //  SyUI syUI = (SyUI) SyUI.getCurrent();
-                //  ContentComponent contentComponent = syUI.getContentComponent();
-
                 SoruPage soruPage = new SoruPage(soru);
 
                 Window window = new Window();
@@ -191,7 +142,7 @@ public class SoruListePage extends VerticalLayout {
                 window.setClosable(true);
                 window.setWindowMode(WindowMode.NORMAL);
                 window.setWidth(30, Unit.PERCENTAGE);
-                window.setHeight(30, Unit.PERCENTAGE);
+                window.setHeight(50, Unit.PERCENTAGE);
                 window.setResizable(true);
                 window.center();
                 window.setContent(soruPage);
@@ -211,9 +162,6 @@ public class SoruListePage extends VerticalLayout {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
 
-                //  SyUI syUI = (SyUI) SyUI.getCurrent();
-                //  ContentComponent contentComponent = syUI.getContentComponent();
-
                 SoruPage soruPage = new SoruPage(soru);
 
                 Window window = new Window();
@@ -221,13 +169,21 @@ public class SoruListePage extends VerticalLayout {
                 window.setClosable(true);
                 window.setWindowMode(WindowMode.NORMAL);
                 window.setWidth(30, Unit.PERCENTAGE);
-                window.setHeight(30, Unit.PERCENTAGE);
+                window.setHeight(50, Unit.PERCENTAGE);
                 window.setResizable(true);
                 window.center();
                 window.setContent(soruPage);
 
                 SyUI syUI = (SyUI) SyUI.getCurrent();
                 syUI.addWindow(window);
+                window.addCloseListener(new Window.CloseListener()
+                {
+                    @Override
+                    public void windowClose(Window.CloseEvent e)
+                    {
+                        fillTable();
+                    }
+                });
             }
         });
         return ekleButton;

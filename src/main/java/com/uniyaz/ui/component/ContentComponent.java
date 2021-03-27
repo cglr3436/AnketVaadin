@@ -4,7 +4,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- * Created by AKARTAL on 12.3.2021.
+ *
  */
 public class ContentComponent extends VerticalLayout {
 

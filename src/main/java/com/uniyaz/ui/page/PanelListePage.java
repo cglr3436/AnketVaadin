@@ -2,7 +2,6 @@ package com.uniyaz.ui.page;
 
 import com.uniyaz.core.domain.Anket;
 import com.uniyaz.core.domain.Panel;
-import com.uniyaz.core.domain.Panel;
 import com.uniyaz.core.domain.Soru;
 import com.uniyaz.core.service.PanelService;
 import com.uniyaz.ui.SyUI;
@@ -16,9 +15,6 @@ import com.vaadin.ui.*;
 
 import java.util.List;
 
-/**
- * Created by AKARTAL on 12.3.2021.
- */
 public class PanelListePage extends VerticalLayout {
 
     private VerticalLayout mainLayout;
@@ -26,13 +22,13 @@ public class PanelListePage extends VerticalLayout {
     private Container container;
     private Anket anket;
 
-    public PanelListePage(){
+    public PanelListePage() {
         this(new Anket());
     }
 
     public PanelListePage(Anket anket) {
         SyUI syUI = (SyUI) SyUI.getCurrent();
-        this.anket=syUI.getAnket();
+        this.anket = syUI.getAnket();
         //this.anket=anket;
         setSizeFull();
         buildMainLayout();
@@ -42,8 +38,6 @@ public class PanelListePage extends VerticalLayout {
 
         fillTable();
 
-        //Button button=buildPanelButton();
-        //addComponents(button);
     }
 
     private void buildMainLayout() {
@@ -51,7 +45,7 @@ public class PanelListePage extends VerticalLayout {
         mainLayout = new VerticalLayout();
         mainLayout.setSizeUndefined();
 
-        Panel panel=new Panel(anket);
+        Panel panel = new Panel(anket);
         Button ekleButton = buildEkleButton(panel);
         mainLayout.addComponents(ekleButton);
 
@@ -71,7 +65,7 @@ public class PanelListePage extends VerticalLayout {
         table.setSelectable(true);
         buildContainer();
         table.setContainerDataSource(container);
-        table.setColumnHeaders("ID", "AD", "",  "");
+        table.setColumnHeaders("ID", "AD", "", "");
     }
 
     private void buildContainer() {
@@ -80,16 +74,15 @@ public class PanelListePage extends VerticalLayout {
         container.addContainerProperty("id", Long.class, null);
         container.addContainerProperty("adi", String.class, null);
         container.addContainerProperty("guncelle", Button.class, null);
-       // container.addContainerProperty("secim", Button.class, null);
         container.addContainerProperty("panel", Button.class, null);
 
     }
 
-    private void fillTable() {
+    public void fillTable() {
 
         PanelService panelService = new PanelService();
         container.removeAllItems();
-        List<Panel> panelList = panelService.findAllbyAnketID(anket.getId());//panelService.findAllHql();
+        List<Panel> panelList = panelService.findAllbyAnketID(anket.getId());
         for (Panel panel : panelList) {
             Item item = container.addItem(panel);
             item.getItemProperty("id").setValue(panel.getId());
@@ -97,9 +90,6 @@ public class PanelListePage extends VerticalLayout {
 
             Button guncelle = buildGuncelleButton(panel);
             item.getItemProperty("guncelle").setValue(guncelle);
-
-          //  Button secim = buildSecimButton(panel);
-         //   item.getItemProperty("secim").setValue(secim);
 
             Button siparisButton = buildSiparisButton(panel);
             item.getItemProperty("panel").setValue(siparisButton);
@@ -109,22 +99,22 @@ public class PanelListePage extends VerticalLayout {
 
     }
 
-        private Button buildPanelButton() {
+    private Button buildPanelButton() {
 
-            Button secim = new Button();
-            secim.setIcon(FontAwesome.CHECK);
-            secim.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    SyUI syUI = (SyUI) SyUI.getCurrent();
-                    ContentComponent  contentComponent = syUI.getContentComponent();
-                    PanelPage panelPage = new PanelPage();
-                    contentComponent.addComponent(panelPage);
+        Button secim = new Button();
+        secim.setIcon(FontAwesome.CHECK);
+        secim.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                SyUI syUI = (SyUI) SyUI.getCurrent();
+                ContentComponent contentComponent = syUI.getContentComponent();
+                PanelPage panelPage = new PanelPage();
+                contentComponent.addComponent(panelPage);
 
-                }
-            });
-            return secim;
-        }
+            }
+        });
+        return secim;
+    }
 
     private Button buildSecimButton(Panel panel) {
 
@@ -149,9 +139,7 @@ public class PanelListePage extends VerticalLayout {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
 
-              //  SyUI syUI = (SyUI) SyUI.getCurrent();
-              //  ContentComponent contentComponent = syUI.getContentComponent();
-                Soru soru=new Soru(panel);
+                Soru soru = new Soru(panel);
 
                 SoruPage soruPage = new SoruPage(soru);  ///*********
 
@@ -160,7 +148,7 @@ public class PanelListePage extends VerticalLayout {
                 window.setClosable(true);
                 window.setWindowMode(WindowMode.NORMAL);
                 window.setWidth(30, Unit.PERCENTAGE);
-                window.setHeight(30, Unit.PERCENTAGE);
+                window.setHeight(50, Unit.PERCENTAGE);
                 window.setResizable(true);
                 window.center();
                 window.setContent(soruPage);
@@ -179,9 +167,6 @@ public class PanelListePage extends VerticalLayout {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
 
-                //  SyUI syUI = (SyUI) SyUI.getCurrent();
-                //  ContentComponent contentComponent = syUI.getContentComponent();
-
                 PanelPage panelPage = new PanelPage(panel);
 
                 Window window = new Window();
@@ -189,7 +174,7 @@ public class PanelListePage extends VerticalLayout {
                 window.setClosable(true);
                 window.setWindowMode(WindowMode.NORMAL);
                 window.setWidth(30, Unit.PERCENTAGE);
-                window.setHeight(30, Unit.PERCENTAGE);
+                window.setHeight(50, Unit.PERCENTAGE);
                 window.setResizable(true);
                 window.center();
                 window.setContent(panelPage);
@@ -209,10 +194,6 @@ public class PanelListePage extends VerticalLayout {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
 
-                //  SyUI syUI = (SyUI) SyUI.getCurrent();
-                //  ContentComponent contentComponent = syUI.getContentComponent();
-
-
                 PanelPage panelPage = new PanelPage(panel);
 
                 Window window = new Window();
@@ -220,13 +201,20 @@ public class PanelListePage extends VerticalLayout {
                 window.setClosable(true);
                 window.setWindowMode(WindowMode.NORMAL);
                 window.setWidth(30, Unit.PERCENTAGE);
-                window.setHeight(30, Unit.PERCENTAGE);
+                window.setHeight(50, Unit.PERCENTAGE);
                 window.setResizable(true);
                 window.center();
                 window.setContent(panelPage);
-
                 SyUI syUI = (SyUI) SyUI.getCurrent();
                 syUI.addWindow(window);
+                window.addCloseListener(new Window.CloseListener()
+                {
+                    @Override
+                    public void windowClose(Window.CloseEvent e)
+                    {
+                        fillTable();
+                    }
+                });
             }
         });
         return ekleButton;

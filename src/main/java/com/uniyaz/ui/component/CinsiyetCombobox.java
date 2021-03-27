@@ -5,7 +5,7 @@ import com.vaadin.data.Item;
 import com.vaadin.ui.ComboBox;
 
 /**
- * Created by AKARTAL on 15.3.2021.
+ *
  */
 public class CinsiyetCombobox extends ComboBox {
 

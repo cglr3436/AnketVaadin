@@ -10,7 +10,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.*;
 
 /**
- * Created by AKARTAL on 12.3.2021.
+ *
  */
 public class AnketPage extends VerticalLayout {
 
@@ -19,7 +19,7 @@ public class AnketPage extends VerticalLayout {
 
     @PropertyId("adi")
     private TextField adi;
-    
+
 
     private FormLayout mainLayout;
 
@@ -30,7 +30,7 @@ public class AnketPage extends VerticalLayout {
     public AnketPage() {
         this(new Anket());
     }
-    
+
     public AnketPage(Anket anket) {
 
         setSizeFull();
@@ -44,15 +44,15 @@ public class AnketPage extends VerticalLayout {
     }
 
     private void buildMainLayout() {
-    
+
         mainLayout = new FormLayout();
         mainLayout.setSizeUndefined();
-        
+
         id = new TextField();
         id.setCaption("ID");
         id.setEnabled(false);
         mainLayout.addComponent(id);
-        
+
         adi = new TextField();
         adi.setCaption("Adı");
         mainLayout.addComponent(adi);

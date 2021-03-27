@@ -4,7 +4,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 /**
- * Created by AKARTAL on 12.3.2021.
+ *
  */
 public class HibernateUtil {
 

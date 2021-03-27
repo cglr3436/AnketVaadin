@@ -50,7 +50,7 @@ public class AnketCevapDao {
             Transaction transaction = session.beginTransaction();
             String hql =
                     "delete " +
-                            "From       AnketCevap anketAlias  where anketAlias.id ='"+id+"'";
+                            "From       AnketCevap anketAlias  where anketAlias.id ='" + id + "'";
             Query query = session.createQuery(hql);
             query.executeUpdate();
             transaction.commit();
@@ -58,13 +58,14 @@ public class AnketCevapDao {
             e.printStackTrace();
         }
     }
-    public void deleteSoruId(Long id,String kullanici_kimlik) {
+
+    public void deleteSoruId(Long id, String kullanici_kimlik) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
             String hql =
                     "delete " +
-                            "From       AnketCevap anketAlias  where anketAlias.soru_id ='"+id+"'"+ "and anketAlias.kullanici_adi='"+kullanici_kimlik+"'";
+                            "From       AnketCevap anketAlias  where anketAlias.soru_id ='" + id + "'" + "and anketAlias.kullanici_adi='" + kullanici_kimlik + "'";
             Query query = session.createQuery(hql);
             query.executeUpdate();
             transaction.commit();
@@ -100,14 +101,29 @@ public class AnketCevapDao {
         return null;
     }
 
-    public List<AnketCevap> findAllbyAnketID(String anketadi,String kullanici_adi) {
+    public List<Object[]> findAllAnketKullaniciHql() {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            String hql =
+                    "Select     anketAlias.adi,anketAlias.kullanici_adi " +
+                            "From       AnketCevap anketAlias where 1=1 group by anketAlias.adi,anketAlias.kullanici_adi";
+            Query query = session.createQuery(hql);
+            return (List<Object[]>) query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public List<AnketCevap> findAllbyAnketID(String anketadi, String kullanici_adi) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
             String hql =
                     "Select     anketAlias " +
-                            "From       AnketCevap anketAlias "+
-                            "Where anketAlias.adi='" + anketadi +"'"
-                            +" and anketAlias.kullanici_adi='" + kullanici_adi +"'" ;
+                            "From       AnketCevap anketAlias " +
+                            "Where anketAlias.adi='" + anketadi + "'"
+                            + " and anketAlias.kullanici_adi='" + kullanici_adi + "'";
             Query query = session.createQuery(hql);
 
             return query.list();
@@ -118,19 +134,19 @@ public class AnketCevapDao {
         return null;
     }
 
-    public Boolean findbySecenekID(String anketadi, String kullanici_adi, Long secenek_id){
+    public Boolean findbySecenekID(String anketadi, String kullanici_adi, Long secenek_id) {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
             String hql =
                     "Select     secenekAlias.id " +
-                            "From       Secenek secenekAlias"+
-            " where secenekAlias.id in ( select anketAlias.secenek_id from AnketCevap anketAlias  Where anketAlias.adi='" + anketadi +"'"
-                    +" and anketAlias.kullanici_adi='" + kullanici_adi +"'"
-                    +" and anketAlias.secenek_id=secenekAlias.id " +
-                    " and anketAlias.secenek_id= '" + secenek_id +"')";
+                            "From       Secenek secenekAlias" +
+                            " where secenekAlias.id in ( select anketAlias.secenek_id from AnketCevap anketAlias  Where anketAlias.adi='" + anketadi + "'"
+                            + " and anketAlias.kullanici_adi='" + kullanici_adi + "'"
+                            + " and anketAlias.secenek_id=secenekAlias.id " +
+                            " and anketAlias.secenek_id= '" + secenek_id + "')";
 
             Query query = session.createQuery(hql);
-            return  query.list().isEmpty();
+            return query.list().isEmpty();
 
         } catch (Exception e) {
             e.printStackTrace();
