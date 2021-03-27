@@ -35,6 +35,10 @@ public class SoruService {
     public List<Soru> findAllbyAnketID(Long id) {
         return soruDao.findAllbyAnketID(id);
     }
+
+    public Soru findAllbyID(Long id) {
+        return soruDao.findAllbyID(id);
+    }
 }
 
 

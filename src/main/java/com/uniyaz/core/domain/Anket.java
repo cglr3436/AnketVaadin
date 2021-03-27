@@ -23,6 +23,11 @@ public class Anket extends BaseEntity {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "" + adi ;
+    }
+
     public String getAdi() {
         return adi;
     }

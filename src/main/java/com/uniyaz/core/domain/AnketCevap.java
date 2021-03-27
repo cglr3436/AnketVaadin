@@ -66,14 +66,18 @@ public class AnketCevap extends BaseEntity{
         //this.anket=secenek.getSoru().getPanel().getAnket();
         this.component=component;
         this.componet_tipi=componet_tipi;
+        this.kullanici_adi=kullanici_adi;
     }
 
 
     public AnketCevap(Soru soru,com.vaadin.ui.Component component,String componet_tipi,String kullanici_adi) {
-        SoruService soruService=new SoruService();
+
+        AnketCevapService anketCevapService=new AnketCevapService();
+
         this.Soru=soru;
         this.soru_id=soru.getId();
-      //  this.panel=soru.getPanel();
+        this.kullanici_adi=kullanici_adi;
+        //  this.panel=soru.getPanel();
 
         //this.anket=soru.getPanel().getAnket();
         this.component=component;
@@ -181,6 +185,14 @@ public class AnketCevap extends BaseEntity{
     @Override
     public String toString() {
         return adi ;
+    }
+
+    public String getKullanici_adi() {
+        return kullanici_adi;
+    }
+
+    public void setKullanici_adi(String kullanici_adi) {
+        this.kullanici_adi = kullanici_adi;
     }
 }
 

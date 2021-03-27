@@ -84,6 +84,23 @@ public class SoruDao {
         return null;
     }
 
+    public Soru findAllbyID(Long id) {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            String hql =
+                    "Select     soruAlias " +
+                            "From       Soru soruAlias "+
+                            "Where soruAlias.id='" + id +"'" ;
+            Query query = session.createQuery(hql);
+
+            return (Soru) query.list().get(0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<SoruDto> findAllHqlAliasToBean() {
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {

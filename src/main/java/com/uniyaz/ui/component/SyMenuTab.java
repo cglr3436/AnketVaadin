@@ -23,6 +23,8 @@ public class SyMenuTab extends BasePage {
     private TabSheet.Tab soruTab;
     private TabSheet.Tab secenekTab;
     private TabSheet.Tab AnketYapTab;
+    private TabSheet.Tab AnketDoldurTab;
+    private TabSheet.Tab AnketOlusturMenuTab;
     public Anket anket;
     public Panel panel;
     public Soru soru;
@@ -33,6 +35,10 @@ public class SyMenuTab extends BasePage {
     SoruListePage soruListePage;
     SecenekListePage secenekListePage;
     VerticalLayout mainlayout;
+     AnketDoldurPage anketDoldurPage;
+     AnketOlusturMenuPage anketOlusturMenuPage;
+
+
     public SyMenuTab() {
         buildMainLayout();
         addComponent( mainlayout );
@@ -120,11 +126,21 @@ public class SyMenuTab extends BasePage {
         }
 
         if(anket!=null) {
-            anketOlusturPage = new AnketOlusturPage();
+            anketOlusturPage = new AnketOlusturPage("");
             AnketYapTab = tabSheet.addTab( anketOlusturPage );
             AnketYapTab.setCaption( "ANKETOLUSTUR" );
         }
 
+        if(anket!=null) {
+            anketDoldurPage = new AnketDoldurPage();
+            AnketDoldurTab = tabSheet.addTab( anketDoldurPage );
+            AnketDoldurTab.setCaption( "ANKETDOLDUR" );
+        }
+
+
+        anketOlusturMenuPage = new AnketOlusturMenuPage();
+        AnketOlusturMenuTab = tabSheet.addTab( anketOlusturMenuPage );
+        AnketOlusturMenuTab.setCaption( "ANKETOLUSTURMENU" );
         mainlayout.addComponents(tabSheet);
 
 
